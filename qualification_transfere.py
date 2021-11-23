@@ -42,3 +42,5 @@ for row in activeSheet.iter_rows(max_row=rowNb):
     for cell in row:
         print("cell.value = ", cell.value)
     print(" ") 
+
+    
