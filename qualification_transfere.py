@@ -40,7 +40,7 @@ print("---------------------")
 
 # create an empty array to store the wanted phrase
 
-array = [""]
+array = []
 
 # loop
 for row in activeSheet.iter_rows(max_row=rowNb):
@@ -65,4 +65,19 @@ for phrases in array:
     formatted_phrase = phrases[16:-1]
     formatted_array.append(formatted_phrase)
 
-print(formatted_array)
+# print(formatted_array)
+
+# Formatting array's phrases to inser it into postgreSQL DataBase
+postgreSQL_array = []
+Id = 241
+for postgreSQLPhrase in formatted_array:
+    insertLine = "("+ str(Id) + ", '" + postgreSQLPhrase + "'),"
+    postgreSQL_array.append(insertLine)
+    Id += 1
+    print(insertLine)
+
+# Transfer the output to a .txt file
+file = open("output.txt", "a", encoding="utf-8")
+for phrases in postgreSQL_array:
+    file.write(phrases + "\n")
+file.close()
