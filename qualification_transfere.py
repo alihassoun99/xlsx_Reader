@@ -30,15 +30,54 @@ cell = "A" + str(2)
 print("cell : ", cell)
 print("cell type : ", type(cell))
 print("---------------------")
-couter = 0
 
 
 ###################################################################
 #
-# passer cellule par cellule et chercher un mot clefs spepicifique
+# passer cellule par cellule et chercher un mot clefs specifique
 #
 ###################################################################
+
+# create an empty array to store the wanted phrase
+
+array = []
+
+# loop
 for row in activeSheet.iter_rows(max_row=rowNb):
     for cell in row:
-        print("cell.value = ", cell.value)
-    print(" ") 
+        cellValue = cell.value
+        if(cellValue != None):
+            word_index = cellValue.find('Qualification')
+            if (word_index != -1):
+                # it is a phrase that we want
+                # print("cell.value = ", cellValue)
+                array.append(cellValue)
+
+            else:
+                pass
+
+
+
+# Formatting array's phrases to the wanted form
+formatted_array = []
+for phrases in array:
+    #print(phrases[16:-1])
+    formatted_phrase = phrases[16:-1]
+    formatted_array.append(formatted_phrase)
+
+# print(formatted_array)
+
+# Formatting array's phrases to inser it into postgreSQL DataBase
+postgreSQL_array = []
+Id = 241
+for postgreSQLPhrase in formatted_array:
+    insertLine = "("+ str(Id) + ", '" + postgreSQLPhrase + "'),"
+    postgreSQL_array.append(insertLine)
+    Id += 1
+    print(insertLine)
+
+# Transfer the output to a .txt file
+file = open("output.txt", "a", encoding="utf-8")
+for phrases in postgreSQL_array:
+    file.write(phrases + "\n")
+file.close()
