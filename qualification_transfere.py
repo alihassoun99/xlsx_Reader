@@ -62,7 +62,7 @@ for row in activeSheet.iter_rows(max_row=rowNb):
 formatted_array = []
 for phrases in array:
     #print(phrases[16:-1])
-    formatted_phrase = phrases[16:-1]
+    formatted_phrase = phrases[16:]  # dernuiere lettre manque
     formatted_array.append(formatted_phrase)
 
 # print(formatted_array)
@@ -81,3 +81,7 @@ file = open("output.txt", "a", encoding="utf-8")
 for phrases in postgreSQL_array:
     file.write(phrases + "\n")
 file.close()
+
+
+
+
